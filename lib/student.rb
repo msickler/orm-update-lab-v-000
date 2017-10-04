@@ -1,15 +1,15 @@
 require_relative "../config/environment.rb"
 
 class Student
-  attr_accessor :id, :name, :grade 
+  attr_accessor :id, :name, :grade
 
   def initialize(id = nil, name, grade)
-    @name = name 
+    @name = name
     @grade = grade
-  end 
+  end
 
   def self.create_table
-    sql = <<-SQL 
+    sql = <<-SQL
     CREATE TABLE IF NOT EXISTS students (
       id INTEGER PRIMARY KEY,
       name TEXT,
@@ -17,22 +17,22 @@ class Student
     )
     SQL
     DB[:conn].execute(sql)
-  end 
+  end
 
-  def self.drop_table 
+  def self.drop_table
     sql = "DROP TABLE students"
     DB[:conn].execute(sql)
-  end 
+  end
 
-  def save 
-    sql = <<-SQL 
+  def save
+    sql = <<-SQL
     INSERT INTO students (name, grade)
     VALUES (?, ?)
     SQL
     DB[:conn].execute(sql, name, grade)
     @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
-  end 
-  
+  end
+
 
 
 end
